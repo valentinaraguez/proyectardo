@@ -11,7 +11,18 @@ def verificar_intento(palabra_secreta, intento):
             resultado.append("⬛")
     return resultado
 
-def jugar(longitud):
+def obtener_intentos(longitud):
+
+    if longitud == 3:
+        return 4
+
+    elif longitud in [4, 5]:
+        return 6
+
+    else:
+        return 8
+
+def obtener_palabras(longitud):
     palabras ={
          3: [
          "sol", "mar", "pan", "luz", "ave", 
@@ -132,6 +143,70 @@ def mostrar_menu():
 
         else:
             print("❌ Opción inválida")
+
+    
+def jugar():
+
+    longitud = mostrar_menu()
+    if longitud is None:
+        return None
+        
+    palabras = obtener_palabras(longitud)
+    palabra_secreta = random.choice(palabras)
+    intentos_maximos = obtener_intentos(longitud) 
+
+    intentos = 0
+
+    letras_usadas = set()
+
+    print("\n" + "=" * 50)
+    print(f"PALABRA DE {longitud} LETRAS".center(50))
+    print("=" * 50)
+
+    print(f"\nTienes {intentos_maximos} intentos")
+
+
+    while intentos < intentos_maximos:
+        intento = input(f"\ningresa una palabra ({longitud} letras): ").upper().strip()
+
+        if len(intento) != longitud or not intento.isalpha():
+            print(f"x error: deben ser {longitud} letras")
+            continue
+
+        if letras_usadas:
+            print("Letras usadas:", ", ".join(sorted(letras_usadas)))
+        
+        resultado = verificar_intento(palabra_secreta, intento)
+
+        print()
+        print(" ".join(intento))
+        print(" ".join(resultado))
+
+        if intento == palabra_secreta:
+            print("\nganaste")
+            return
+
+        intentos += 1
+        print(f"intentos restantes: {intentos_maximos - intentos}")
+
+    print(f"\ngame over. la palabra era: {palabra_secreta}")
+
+
+
+def main():
+    while True:
+        opcion = input("\nelegi longitud de palabra (3 a 7): ").strip()
+        
+        if not opcion.isdigit() or int(opcion) not in [3, 4, 5, 6, 7]:
+            print("x opcion invalida")
+            continue
+
+        jugar(int(opcion))
+        continuar = input("\njugar de nuevo? (s/n): ").lower().strip()
+        if continuar not in ["s", "si", "sí"]:
+            print("\nnos vemos chao pescao")
+            break
+
 
 
 
