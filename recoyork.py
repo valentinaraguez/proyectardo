@@ -11,8 +11,8 @@ def verificar_intento(palabra_secreta, intento):
             resultado.append("⬛")
     return resultado
 
-    def jugar(longitud):
-        palabras ={
+def jugar(longitud):
+    palabras ={
          3: [
          "sol", "mar", "pan", "luz", "ave", 
          "rio", "sal", "pie", "mes", "dia",
