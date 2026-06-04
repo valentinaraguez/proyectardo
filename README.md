@@ -85,7 +85,7 @@ Resultado:
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/valentinaraguez/proyectardo
+git clone https://github.com/valentinaraguez/proyectardo.git
 ```
 
 ### 2. Entrar al directorio
@@ -111,7 +111,7 @@ python3 recoyork.py
 ## 📂 Estructura del Proyecto
 
 ```text
-wordle-python/
+proyectardo/
 │
 ├── recoyork.py
 └──  README.md
