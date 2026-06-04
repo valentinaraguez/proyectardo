@@ -56,5 +56,49 @@ def main():
             print("\nnos vemos")
             break
 
+def mostrar_menu():
+
+    print("\n" + "=" * 50)
+    print("WORDLE".center(50))
+    print("=" * 50)
+
+    print("\n1 - Fácil (3 letras)")
+    print("2 - Normal (4 letras)")
+    print("3 - Medio (5 letras)")
+    print("4 - Difícil (6 letras)")
+    print("5 - Experto (7 letras)")
+    print("6 - Aleatorio")
+    print("0 - Salir")
+
+    while True:
+
+        opcion = input("\nElige una opción: ")
+
+        if opcion == "0":
+            return None
+
+        elif opcion == "1":
+            return 3
+
+        elif opcion == "2":
+            return 4
+
+        elif opcion == "3":
+            return 5
+
+        elif opcion == "4":
+            return 6
+
+        elif opcion == "5":
+            return 7
+
+        elif opcion == "6":
+            return random.choice([3, 4, 5, 6, 7])
+
+        else:
+            print("❌ Opción inválida")
+
+
+
 if __name__ == "__main__":
     main()
