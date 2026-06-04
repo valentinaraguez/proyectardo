@@ -56,7 +56,7 @@ def main():
             print("\nnos vemos")
             break
 
-def mostrar_menu()_
+def mostrar_menu():
     
     print("\n" + "=" * 50)
     print("bienvenido a wordle".center(50))
