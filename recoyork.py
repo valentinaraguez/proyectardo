@@ -22,7 +22,7 @@ def obtener_intentos(longitud):
     else:
         return 8
 
-def obtener_palabras(longitud):
+def obtener_palabras_por_longitud(longitud):
     palabras ={
          3: [
          "sol", "mar", "pan", "luz", "ave", 
@@ -63,7 +63,7 @@ def obtener_palabras(longitud):
     intentos = 0
 
     print("\n" + "=" * 30)
-    print("wordle base".center(30))
+    print("wordle para chads".center(30))
     print("=" * 30)
 
     while intentos < intentos_maximos:
@@ -108,7 +108,7 @@ def mostrar_menu():
     print("WORDLE".center(50))
     print("=" * 50)
 
-    print("\n1 - Fácil (3 letras)")
+    print("\n1 - Fácil(para noobs) (3 letras)")
     print("2 - Normal (4 letras)")
     print("3 - Medio (5 letras)")
     print("4 - Difícil (6 letras)")
@@ -148,12 +148,15 @@ def mostrar_menu():
 def jugar():
 
     longitud = mostrar_menu()
+
     if longitud is None:
         return None
-        
-    palabras = obtener_palabras(longitud)
+
+    palabras = obtener_palabras_por_longitud(longitud)
+
     palabra_secreta = random.choice(palabras)
-    intentos_maximos = obtener_intentos(longitud) 
+
+    intentos_maximos = obtener_intentos(longitud)
 
     intentos = 0
 
@@ -165,31 +168,64 @@ def jugar():
 
     print(f"\nTienes {intentos_maximos} intentos")
 
-
     while intentos < intentos_maximos:
-        intento = input(f"\ningresa una palabra ({longitud} letras): ").upper().strip()
 
-        if len(intento) != longitud or not intento.isalpha():
-            print(f"x error: deben ser {longitud} letras")
-            continue
+        print(f"\nIntento {intentos + 1} de {intentos_maximos}")
 
         if letras_usadas:
             print("Letras usadas:", ", ".join(sorted(letras_usadas)))
-        
+
+        intento = input("\nIngresa una palabra: ").upper().strip()
+
+        # validar la longitud de la palabra
+
+        if len(intento) != longitud:
+            print(f"❌ Debe tener {longitud} letras")
+            continue
+
+        if not intento.isalpha():
+            print("❌ Solo se permiten letras")
+            continue
+
+        # Letras usadas 
+
+        for letra in intento:
+            letras_usadas.add(letra)
+
+        # verificar intentos
+
         resultado = verificar_intento(palabra_secreta, intento)
 
         print()
+
         print(" ".join(intento))
         print(" ".join(resultado))
 
+        # mensaje al ganar
+
         if intento == palabra_secreta:
-            print("\nganaste")
-            return
+
+            print("\n" + "🎉" * 20)
+            print("¡GANASTE!")
+            print(f"La palabra era: {palabra_secreta}")
+            print("🎉" * 20)
+
+            return True
 
         intentos += 1
-        print(f"intentos restantes: {intentos_maximos - intentos}")
 
-    print(f"\ngame over. la palabra era: {palabra_secreta}")
+        restantes = intentos_maximos - intentos
+
+        print(f"\nIntentos restantes: {restantes}")
+
+    # mensaje al perder
+
+    print("\n" + "😢" * 20)
+    print("GAME OVER")
+    print(f"La palabra era: {palabra_secreta}")
+    print("😢" * 20)
+
+    return False
 
 
 
@@ -206,7 +242,7 @@ def main():
 
         if resultado is None:
 
-            print("\n👋 Gracias por jugar")
+            print("\n👋 Gracias por jugar chao pescao")
             break
 
         partidas_jugadas += 1
@@ -228,7 +264,7 @@ def main():
         print(f"Porcentaje de victorias: {porcentaje}%")
 
        
-        #while para continuar o salir
+
         while True:
 
             continuar = input("\n¿Jugar otra vez? (s/n): ").lower().strip()
@@ -238,7 +274,7 @@ def main():
 
             elif continuar in ["n", "no"]:
 
-                print("\n👋 Hasta la próxima")
+                print("\n👋 Chao pescao")
                 return
 
             else:
