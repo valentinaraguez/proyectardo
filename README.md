@@ -161,7 +161,7 @@ Porcentaje de victorias: 60%
 
 **EmaVallejos y valentinaraguez**
 
-Proyecto realizado como práctica de programación en Python.
+Proyecto realizado como práctica de programación en Python y aprender a utilizar GitHub.
 
 ---
 
