@@ -1,14 +1,22 @@
 import random
 
 def verificar_intento(palabra_secreta, intento):
-    resultado = []
+
+    resultado = ["⬛"] * len(intento)
+    palabra_temp = list(palabra_secreta)
+
+    # Verdes
     for i in range(len(intento)):
         if intento[i] == palabra_secreta[i]:
-            resultado.append("🟩")
-        elif intento[i] in palabra_secreta:
-            resultado.append("🟨")
-        else:
-            resultado.append("⬛")
+            resultado[i] = "🟩"
+            palabra_temp[i] = None
+
+    # Amarillos
+    for i in range(len(intento)):
+        if resultado[i] == "⬛" and intento[i] in palabra_temp:
+            resultado[i] = "🟨"
+            palabra_temp[palabra_temp.index(intento[i])] = None
+
     return resultado
 
 def obtener_intentos(longitud):
@@ -21,6 +29,7 @@ def obtener_intentos(longitud):
 
     else:
         return 8
+    
 
 def obtener_palabras_por_longitud(longitud):
     palabras ={
@@ -28,27 +37,32 @@ def obtener_palabras_por_longitud(longitud):
          "sol", "mar", "pan", "luz", "ave", 
          "rio", "sal", "pie", "mes", "dia",
          "gol", "bar", "voz", "ley", "tos",
-         "uno", "sur", "fin", "mal", "dos"
+         "uno", "sur", "fin", "mal", "dos",
+         "ojo", "feo", "rey", "pez", "gol"
          ],
 
         4: [
             "gato","luna","rojo","azul","cafe",
             "mesa","cama","pato","rana","nube",
-            "lago","cine","rayo","roca","sopa"
+            "lago","cine","rayo","roca","sopa",
+            "flor","casa","leon","vaca","lago",
+            "pelo","cara","boca","dado","mapa"
         ],
 
         5: [
             "perro","arbol","negro","verde","playa",
             "nieve","raton","mango","llave","piano",
             "reloj","tigre","limon","queso","avion",
-            "cielo","campo","fruta","silla","radio"
+            "cielo","campo","fruta","silla","radio",
+            "juego","plaza","coche","barco","lente"
         ],
 
         6: [
             "tierra","viento","blanco","puerta","moneda",
             "camino","espejo","jardin","bosque","piedra",
             "fiesta","madera","helado","conejo","campos",
-            "tomate","estado","anillo","trapos","mantel"
+            "tomate","estado","anillo","trapos","mantel",
+            "sombra","tesoro","pajaro","cuadro","lentes"
         ],
 
         7: [
@@ -56,37 +70,14 @@ def obtener_palabras_por_longitud(longitud):
             "mercado","escuela","palacio","botella","peligro",
             "cerebro","trabajo","talento","pescado","abrazos",
             "motores","musical","maestro","soldado","naranja"
+            "caracol","bandera","cascada","pantera","perfume"
         ]
     }
-    palabra_secreta = random.choice(palabras[longitud]).upper()
-    intentos_maximos = 5
-    intentos = 0
+    for clave in palabras:
+        palabras[clave] = [palabra.upper() for palabra in palabras[clave]]
 
-    print("\n" + "=" * 30)
-    print("wordle para chads".center(30))
-    print("=" * 30)
+    return palabras[longitud]
 
-    while intentos < intentos_maximos:
-        intento = input(f"\ningresa una palabra ({longitud} letras): ").upper().strip()
-
-        if len(intento) != longitud or not intento.isalpha():
-            print(f"x error: deben ser {longitud} letras")
-            continue
-
-        resultado = verificar_intento(palabra_secreta, intento)
-
-        print()
-        print(" ".join(intento))
-        print(" ".join(resultado))
-
-        if intento == palabra_secreta:
-            print("\nganaste")
-            return
-
-        intentos += 1
-        print(f"intentos restantes: {intentos_maximos - intentos}")
-
-    print(f"\ngame over. la palabra era: {palabra_secreta}")
 
 def main():
     while True:
@@ -162,6 +153,8 @@ def jugar():
 
     letras_usadas = set()
 
+    historial = []
+
     print("\n" + "=" * 50)
     print(f"PALABRA DE {longitud} LETRAS".center(50))
     print("=" * 50)
@@ -187,6 +180,9 @@ def jugar():
             print("❌ Solo se permiten letras")
             continue
 
+        if intento not in palabras:
+            print("❌ La palabra no existe")
+            continue
         # Letras usadas 
 
         for letra in intento:
@@ -195,11 +191,15 @@ def jugar():
         # verificar intentos
 
         resultado = verificar_intento(palabra_secreta, intento)
+        historial.append((intento, resultado))
 
+      
         print()
 
-        print(" ".join(intento))
-        print(" ".join(resultado))
+        for palabra, res in historial:
+            print(" ".join(palabra))
+            print(" ".join(res))
+            print()
 
         # mensaje al ganar
 
@@ -247,7 +247,7 @@ def main():
 
         partidas_jugadas += 1
 
-        if resultado:
+        if resultado:   
             partidas_ganadas += 1
 
         # estadisticas del juego
