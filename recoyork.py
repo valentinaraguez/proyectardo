@@ -194,19 +194,55 @@ def jugar():
 
 
 def main():
-    while True:
-        opcion = input("\nelegi longitud de palabra (3 a 7): ").strip()
-        
-        if not opcion.isdigit() or int(opcion) not in [3, 4, 5, 6, 7]:
-            print("x opcion invalida")
-            continue
 
-        jugar(int(opcion))
-        continuar = input("\njugar de nuevo? (s/n): ").lower().strip()
-        if continuar not in ["s", "si", "sí"]:
-            print("\nnos vemos chao pescao")
+    partidas_ganadas = 0
+    partidas_jugadas = 0
+
+    while True:
+
+        resultado = jugar()
+
+        # SALIR
+
+        if resultado is None:
+
+            print("\n👋 Gracias por jugar")
             break
 
+        partidas_jugadas += 1
+
+        if resultado:
+            partidas_ganadas += 1
+
+        # estadisticas del juego
+
+        print("\n" + "=" * 40)
+        print("ESTADÍSTICAS")
+        print("=" * 40)
+
+        print(f"Partidas jugadas: {partidas_jugadas}")
+        print(f"Partidas ganadas: {partidas_ganadas}")
+
+        porcentaje = int((partidas_ganadas / partidas_jugadas) * 100)
+
+        print(f"Porcentaje de victorias: {porcentaje}%")
+
+       
+        #while para continuar o salir
+        while True:
+
+            continuar = input("\n¿Jugar otra vez? (s/n): ").lower().strip()
+
+            if continuar in ["s", "si", "sí"]:
+                break
+
+            elif continuar in ["n", "no"]:
+
+                print("\n👋 Hasta la próxima")
+                return
+
+            else:
+                print("❌ Ingresa 's' o 'n'")
 
 
 
