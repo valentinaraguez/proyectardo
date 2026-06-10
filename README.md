@@ -159,7 +159,7 @@ Porcentaje de victorias: 60%
 
 ## 👨‍💻 Autor
 
-**Ema Valle y valentinaraguez**
+**EmaVallejos y valentinaraguez**
 
 Proyecto realizado como práctica de programación en Python.
 

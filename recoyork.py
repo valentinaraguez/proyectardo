@@ -247,7 +247,7 @@ def main():
 
         partidas_jugadas += 1
 
-        if resultado:
+        if resultado:   
             partidas_ganadas += 1
 
         # estadisticas del juego
